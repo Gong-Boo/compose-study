@@ -24,3 +24,8 @@
   - MapSaver
   - ListSaver
   
+## Compose에서 상태 관리
+- 각각 ViewModel, Class, Composable로 크게 나눌수 있다.
+- ViewModel에서는 비지니스 로직등을 관리하며 데이터를 Composable로 보내주어 Composable에서 관측하며 UI를 다시 recomposition할수있도록 해주며
+- Class에서는 Composable에서 처리하기 힘든 Ui로직 스낵바 띄우기, 네비게이션 로직등을 Composable에서 콜백형태로 이벤트를 받아 처리하며
+- Composable에서는 Class에 이벤트, ViewModeld에서 state바뀌는등을 보며 UI변경등을 수행합니다.

@@ -22,3 +22,35 @@
 - Compose의 상태를 Compose에서 관리하는 않는 객체와 공유하기 위해 사용.
 - 리컴포지션 성공 시마다 호출됨.
 
+### produceState: Compos가 아닌 상태를 Compose 상태로 변환
+- Compose가 아닌 Flow, RxJava, LiveData와 같은 구동 기반 상태를 컴포지션 형태로 변환하기 위해 사용.
+- 컴포지션을 시작하면 실행되고, 컴포지션을 종료하면 취소됨.
+- 동일한 값을 설정하면 트리거되지 않음.
+
+```kotlin
+@Composable
+fun <T> produceState(
+    initialValue: T,
+    key1: Any?,
+    key2: Any?,
+    @BuilderInference producer: suspend ProduceStateScope<T>.() -> Unit
+): State<T> {
+    val result = remember { mutableStateOf(initialValue) }
+    LaunchedEffect(key1, key2) {
+        ProduceStateScopeImpl(result, coroutineContext).producer()
+    }
+    return result
+}
+```
+- 내부적으로 LaunchedEffect, remember, state를 이용하여 result를 업데이트 함.
+
+### derivedStateOf: 하나 이상의 상태 객체를 다른 상태로 변환
+- 다른 상태 객체에서 특정 상태가 계산되거나 파생되는 경우 사용.
+- 계산에서 사용되는 상태 중 하나가 변경되더라도 계산이 실행됨.
+
+### snapshotFlow: State를 Flow로 변환
+- snapshotFlow 블록 내에서 읽은 State 객체가 변경되면 기존값과 다를 경우 새 값을 방출함.
+
+### 기타
+- 반환 타입이 있는 Composable 함수: 대문자로 시작
+- 반환 타입이 없는 Composable 함수: 소문자로 시작

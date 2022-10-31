@@ -10,4 +10,11 @@ Foundation 혹은 Material 라이브러리의 Composable과 Modifier로 구성�
 시멘틱 트리의 노드에는 상응하는 Composable의 의미를 전달하는 속성이 포함되어 있음    
 시멘틱 트리를 시각화하려면 ```Layout Inspector``` 도구 혹은 ```printToLog()``` 함수를 사용
 
+### 병합된 시맨틱 트리와 병합되지 않은 시맨틱 트리
+```Modifier.semantics (mergeDescendants = true) {}```     
+화면에 표시되는 내용의 정확한 의미를 전달하기 위해 노드의 특정 하위 트리를 병합하여 하나로 처리하는 것도 유용함    
+이를 통해 전체로서 일련의 노드를 추론 가능    
 
+### 트리 검사
+병합되지 않는 트리를 인쇄하려면 ```useUnmergedTree``` 속성을 사용   
+병합에 포함되지 않게 하려면 ```mergeDescendants``` 속성을 사용    
